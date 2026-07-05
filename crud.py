@@ -22,12 +22,21 @@ def get_authors(db: Session, skip: int = 0, limit: int = 100):
 def get_author_by_id(db: Session, author_id: int):
     return (
         db.query(models.Author)
-        .filter(models.Author.id == author_id).
-        first()
+        .filter(models.Author.id == author_id)
+        .first()
     )
 
 
 def create_book(db: Session, book: schemas.Book):
+    author = (
+        db.query(models.Author)
+        .filter(models.Author.id == book.author_id)
+        .first()
+    )
+
+    if author is None:
+        return None
+
     db_book = models.Book(
         title=book.title,
         summary=book.summary,

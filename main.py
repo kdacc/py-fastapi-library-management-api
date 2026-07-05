@@ -41,7 +41,11 @@ def get_authors_by_id(author_id: int, db: Session = Depends(get_db)):
 
 @app.post("/books/", response_model=schemas.Book)
 def create_book(book: schemas.Book, db: Session = Depends(get_db)):
-    return crud.create_book(db, book)
+    created_book = crud.create_book(db, book)
+
+    if created_book is None:
+        raise HTTPException(status_code=404, detail="Book not found")
+    return created_book
 
 
 @app.get("/books/", response_model=list[schemas.Book])

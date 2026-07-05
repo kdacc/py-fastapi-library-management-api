@@ -11,13 +11,14 @@ class Book(Base):
     summary = Column(String(511))
     publication_date = Column(DateTime)
     author_id = Column(Integer, ForeignKey("author.id"))
+    author = relationship("Author", back_populates="books")
 
 
 class Author(Base):
     __tablename__ = 'author'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String(255))
+    name = Column(String(255), unique=True)
     bio = Column(String(511))
-    books = relationship(Book)
+    books = relationship("Book", back_populates="author")
 
