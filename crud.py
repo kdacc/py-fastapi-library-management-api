@@ -4,7 +4,7 @@ import schemas
 import models
 
 
-def create_author(db: Session, author: schemas.Author):
+def create_author(db: Session, author: schemas.AuthorCreate):
     db_author_name = models.Author(
         name=author.name,
         bio=author.bio,
@@ -27,7 +27,7 @@ def get_author_by_id(db: Session, author_id: int):
     )
 
 
-def create_book(db: Session, book: schemas.Book):
+def create_book(db: Session, book: schemas.BookCreate):
     author = (
         db.query(models.Author)
         .filter(models.Author.id == book.author_id)

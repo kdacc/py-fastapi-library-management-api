@@ -19,7 +19,7 @@ def get_db():
 
 
 @app.post("/authors/", response_model=schemas.Author)
-def create_author(author: schemas.Author, db: Session = Depends(get_db)):
+def create_author(author: schemas.AuthorCreate, db: Session = Depends(get_db)):
     return crud.create_author(db, author)
 
 
@@ -40,7 +40,7 @@ def get_authors_by_id(author_id: int, db: Session = Depends(get_db)):
 
 
 @app.post("/books/", response_model=schemas.Book)
-def create_book(book: schemas.Book, db: Session = Depends(get_db)):
+def create_book(book: schemas.BookCreate, db: Session = Depends(get_db)):
     created_book = crud.create_book(db, book)
 
     if created_book is None:
